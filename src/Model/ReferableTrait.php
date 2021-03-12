@@ -5,6 +5,31 @@ namespace Kikwik\ReferableBundle\Model;
 
 trait ReferableTrait
 {
+    /**************************************/
+    /* HTTP_REFERER                       */
+    /**************************************/
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $httpReferer;
+
+    public function getHttpReferer() {
+        return $this->httpReferer;
+    }
+
+    public function setHttpReferer(?string $httpReferer) {
+        $this->httpReferer = $httpReferer;
+        return $this;
+    }
+
+
+    /**************************************/
+    /* UTMs                               */
+    /**************************************/
+
+
+
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */

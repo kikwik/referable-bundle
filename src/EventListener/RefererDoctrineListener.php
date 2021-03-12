@@ -6,18 +6,18 @@ namespace Kikwik\ReferableBundle\EventListener;
 
 use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
 use Kikwik\ReferableBundle\Model\ReferableInterface;
-use Kikwik\ReferableBundle\Service\RefererCookieManager;
+use Kikwik\ReferableBundle\Service\RefererManager;
 
 class RefererDoctrineListener
 {
     /**
-     * @var \Kikwik\ReferableBundle\Service\RefererCookieManager
+     * @var \Kikwik\ReferableBundle\Service\RefererManager
      */
-    private $cookieManager;
+    private $refererManager;
 
-    public function __construct(RefererCookieManager $cookieManager)
+    public function __construct(RefererManager $refererManager)
     {
-        $this->cookieManager = $cookieManager;
+        $this->refererManager = $refererManager;
     }
 
     public function prePersist(LifecycleEventArgs $args)
@@ -29,6 +29,7 @@ class RefererDoctrineListener
             return;
         }
 
-        $entity->setReferer($this->cookieManager->getCookieValue());
+        $entity->setHttpReferer($this->refererManager->getHttpReferer());
+        $entity->setReferer($this->refererManager->getCookieValue());
     }
 }

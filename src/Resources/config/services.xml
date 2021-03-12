@@ -5,20 +5,21 @@
         http://symfony.com/schema/dic/services/services-1.0.xsd">
   <services>
 
-    <!-- RefererCookieManager -->
-    <service id="kikwik_referable.service.referer_cookie_manager" class="Kikwik\ReferableBundle\Service\RefererCookieManager">
+    <!-- RefererManager -->
+    <service id="kikwik_referable.service.referer_manager" class="Kikwik\ReferableBundle\Service\RefererManager">
       <argument type="service" id="request_stack"/>
+      <argument type="service" id="session"/>
     </service>
 
     <!-- RefererRequestSubscriber -->
     <service id="kikwik_referable.event_listener.referer_request_subscriber" class="Kikwik\ReferableBundle\EventListener\RefererRequestSubscriber">
-      <argument type="service" id="kikwik_referable.service.referer_cookie_manager"/>
+      <argument type="service" id="kikwik_referable.service.referer_manager"/>
       <tag name="kernel.event_subscriber" />
     </service>
 
     <!-- RefererDoctrineListener -->
     <service id="kikwik_referable.event_listener.referer_doctrine_listener" class="Kikwik\ReferableBundle\EventListener\RefererDoctrineListener">
-      <argument type="service" id="kikwik_referable.service.referer_cookie_manager"/>
+      <argument type="service" id="kikwik_referable.service.referer_manager"/>
       <tag name="doctrine.event_listener" event="prePersist"/>
     </service>
 

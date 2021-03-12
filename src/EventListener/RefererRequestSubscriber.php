@@ -4,21 +4,20 @@
 namespace Kikwik\ReferableBundle\EventListener;
 
 
-use Kikwik\ReferableBundle\Service\RefererCookieManager;
+use Kikwik\ReferableBundle\Service\RefererManager;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
 
 class RefererRequestSubscriber implements EventSubscriberInterface
 {
     /**
-     * @var \Kikwik\ReferableBundle\Service\RefererCookieManager
+     * @var \Kikwik\ReferableBundle\Service\RefererManager
      */
-    private $cookieManager;
+    private $refererManager;
 
-    public function __construct(RefererCookieManager $cookieManager)
+    public function __construct(RefererManager $refererManager)
     {
-        $this->cookieManager = $cookieManager;
+        $this->refererManager = $refererManager;
     }
 
     public function onResponseEvent(ResponseEvent $event)
@@ -26,7 +25,7 @@ class RefererRequestSubscriber implements EventSubscriberInterface
         $request = $event->getRequest();
         $response = $event->getResponse();
 
-        $this->cookieManager->checkReferer($request, $response);
+        $this->refererManager->checkReferer($request, $response);
     }
 
 

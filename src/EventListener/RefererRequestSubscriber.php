@@ -22,10 +22,13 @@ class RefererRequestSubscriber implements EventSubscriberInterface
 
     public function onResponseEvent(ResponseEvent $event)
     {
-        $request = $event->getRequest();
-        $response = $event->getResponse();
+        if($event->isMasterRequest())
+        {
+            $request = $event->getRequest();
+            $response = $event->getResponse();
 
-        $this->refererManager->checkReferer($request, $response);
+            $this->refererManager->checkReferer($request, $response);
+        }
     }
 
 

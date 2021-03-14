@@ -15,7 +15,15 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
-
+                ->arrayNode('interfaces')
+                    ->arrayPrototype()
+                        ->children()
+                            ->scalarNode('cookie_name')->end()
+                            ->arrayNode('query_params')->requiresAtLeastOneElement()->scalarPrototype()->end()->end()
+                            ->scalarNode('expire')->end()
+                        ->end()
+                    ->end()
+                ->end()
             ->end()
         ;
 

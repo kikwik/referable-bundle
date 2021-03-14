@@ -7,6 +7,7 @@
 
     <!-- RefererManager -->
     <service id="kikwik_referable.service.referer_manager" class="Kikwik\ReferableBundle\Service\RefererManager">
+      <argument>$cookiesConfig</argument>
       <argument type="service" id="request_stack"/>
       <argument type="service" id="session"/>
     </service>

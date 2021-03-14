@@ -22,28 +22,41 @@ Create the `config/packages/kikwik_referable.yaml` config file
 
 ```yaml
 kikwik_referable:
-    
+    interfaces:
+        CpcReferableInterface:
+            cookie_name: 'r'
+            query_params: ['r']
+            expire: '+30 days'
+        UtmReferableInterface:
+            cookie_name: 'utm'
+            query_params: [ 'utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content' ]
+            expire: '+30 days'
 ```
 
-
-Implements `ReferableInterface` to your classes and use the `ReferableTrait`:
+Implements one or more interfaces in your classes and use the corresponding trait (Traits can be used only with query_params from the example above):
 
 ```php
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Kikwik\ReferableBundle\Model\ReferableInterface;
-use Kikwik\ReferableBundle\Model\ReferableTrait;
+use Kikwik\ReferableBundle\Model\CpcReferableInterface;
+use Kikwik\ReferableBundle\Model\CpcReferableTrait;
+use Kikwik\ReferableBundle\Model\HttpReferableInterface;
+use Kikwik\ReferableBundle\Model\HttpReferableTrait;
+use Kikwik\ReferableBundle\Model\UtmReferableInterface;
+use Kikwik\ReferableBundle\Model\UtmReferableTrait;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @ORM\Table(name="`user`")
  */
-class User implements UserInterface, ReferableInterface
+class User implements UserInterface, HttpReferableInterface, CpcReferableInterface, UtmReferableInterface
 {
-    use ReferableTrait;
-
+    use HttpReferableTrait;
+    use CpcReferableTrait;
+    use UtmReferableTrait;
+    
     //...
 }
 ```

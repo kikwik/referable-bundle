@@ -5,7 +5,9 @@ namespace Kikwik\ReferableBundle\EventListener;
 
 
 use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
-use Kikwik\ReferableBundle\Model\ReferableInterface;
+use Kikwik\ReferableBundle\Model\CpcReferableInterface;
+use Kikwik\ReferableBundle\Model\HttpReferableInterface;
+use Kikwik\ReferableBundle\Model\UtmReferableInterface;
 use Kikwik\ReferableBundle\Service\RefererManager;
 
 class RefererDoctrineListener
@@ -24,12 +26,23 @@ class RefererDoctrineListener
     {
         $entity = $args->getObject();
 
-        // only act on some "Product" entity
-        if (!$entity instanceof ReferableInterface) {
-            return;
+        if ($entity instanceof HttpReferableInterface)
+        {
+            $entity->setHttpReferer($this->refererManager->getHttpReferer());
+            $entity->setHttpRefererLandingUrl($this->refererManager->getHttpRefererLandingUrl());
         }
 
-        $entity->setHttpReferer($this->refererManager->getHttpReferer());
-        $entity->setReferer($this->refererManager->getCookieValue());
+        if ($entity instanceof CpcReferableInterface)
+        {
+            $entity->setCpcReferer($this->refererManager->getCookieValues());
+            $this->refererManager->clearCookiesOnNextResponse();
+        }
+
+        if ($entity instanceof UtmReferableInterface)
+        {
+            $entity->setUtmReferer($this->refererManager->getCookieValues());
+            $this->refererManager->clearCookiesOnNextResponse();
+        }
+
     }
 }

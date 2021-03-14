@@ -18,6 +18,9 @@ class KikwikReferableExtension extends Extension
 
         $configuration = $this->getConfiguration($configs, $container);
         $config = $this->processConfiguration($configuration, $configs);
+
+        $refererManager = $container->getDefinition('kikwik_referable.service.referer_manager');
+        $refererManager->setArgument('$configuration', $config['interfaces']);
     }
 
 }

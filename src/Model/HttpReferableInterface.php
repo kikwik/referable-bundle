@@ -3,9 +3,9 @@
 namespace Kikwik\ReferableBundle\Model;
 
 
-interface ReferableInterface
+interface HttpReferableInterface
 {
     public function setHttpReferer(?string $httpReferer);
 
-    public function setReferer(?string $referer); // todo: change to UTMs
+    public function setHttpRefererLandingUrl(?string $httpRefererLandingUrl);
 }

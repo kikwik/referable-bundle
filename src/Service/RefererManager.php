@@ -73,7 +73,7 @@ class RefererManager
             elseif($this->session->get('kikwik_referable.clear_cookies',false))
             {
                 $response->headers->clearCookie($interfaceConfig['cookie_name']);
-                $this->session->clear('kikwik_referable.cookie.'.$interfaceConfig['cookie_name']);
+                $this->session->remove('kikwik_referable.cookie.'.$interfaceConfig['cookie_name']);
             }
         }
 

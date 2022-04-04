@@ -11,6 +11,7 @@
       <argument type="service" id="request_stack"/>
       <argument type="service" id="session"/>
     </service>
+    <service id="Kikwik\ReferableBundle\Service\RefererManager" alias="kikwik_referable.service.referer_manager"/>
 
     <!-- RefererRequestSubscriber -->
     <service id="kikwik_referable.event_listener.referer_request_subscriber" class="Kikwik\ReferableBundle\EventListener\RefererRequestSubscriber">

@@ -4,7 +4,7 @@
 namespace Kikwik\ReferableBundle\EventListener;
 
 
-use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
+use Doctrine\ORM\Event\LifecycleEventArgs;
 use Kikwik\ReferableBundle\Model\CpcReferableInterface;
 use Kikwik\ReferableBundle\Model\HttpReferableInterface;
 use Kikwik\ReferableBundle\Model\UtmReferableInterface;

@@ -33,7 +33,7 @@ class RefererManager
         $this->session = $session;
     }
 
-    public function checkReferer(Request $request, Response $response)
+    public function readRefererFromRequest(Request $request)
     {
         // http referer
         if(!$this->session->has('kikwik_referable.http_referer'))
@@ -45,29 +45,40 @@ class RefererManager
         // cookies
         foreach($this->configuration as $interfaceName => $interfaceConfig)
         {
+            // get values from query params
+            $cookieValue = [];
+            foreach($interfaceConfig['query_params'] as $queryParam)
+            {
+                if($request->query->has($queryParam))
+                {
+                    $cookieValue[$queryParam] = $request->query->get($queryParam);
+                }
+            }
+
+            if(count($cookieValue)) // if values are present, save it to the session
+            {
+                $this->session->set('kikwik_referable.cookie.'.$interfaceConfig['cookie_name'],$this->serialize($cookieValue));
+            }
+        }
+    }
+
+    public function writeRefererCookie(Request $request, Response $response)
+    {
+        // cookies
+        foreach($this->configuration as $interfaceName => $interfaceConfig)
+        {
             if(!$request->cookies->has($interfaceConfig['cookie_name'])) // check if the cookie was not already set
             {
-                // get values from query params
-                $cookieValue = [];
-                foreach($interfaceConfig['query_params'] as $queryParam)
-                {
-                    if($request->query->has($queryParam))
-                    {
-                        $cookieValue[$queryParam] = $request->query->get($queryParam);
-                    }
-                }
-
-                if(count($cookieValue)) // if values are present, save the cookie
+                // read value from session
+                $serializedCookieValue = $this->session->get('kikwik_referable.cookie.'.$interfaceConfig['cookie_name'],null);
+                if($serializedCookieValue) // if values are present, save the cookie
                 {
                     // send cookie with the response
                     $response->headers->setCookie(Cookie::create(
                         $interfaceConfig['cookie_name'],
-                        $this->serialize($cookieValue),
+                        $serializedCookieValue,
                         strtotime($interfaceConfig['expire'])
                     ));
-
-                    // save value also in session
-                    $this->session->set('kikwik_referable.cookie.'.$interfaceConfig['cookie_name'],$this->serialize($cookieValue));
                 }
             }
             elseif($this->session->get('kikwik_referable.clear_cookies',false))

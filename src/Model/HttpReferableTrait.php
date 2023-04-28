@@ -3,6 +3,8 @@
 namespace Kikwik\ReferableBundle\Model;
 
 
+use Doctrine\ORM\Mapping as ORM;
+
 trait HttpReferableTrait
 {
     /**************************************/

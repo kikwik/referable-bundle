@@ -9,37 +9,37 @@ trait UtmReferableTrait
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $utmSource;
+    protected $utmSource;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $utmMedium;
+    protected $utmMedium;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $utmCampaign;
+    protected $utmCampaign;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $utmTerm;
+    protected $utmTerm;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $utmContent;
+    protected $utmContent;
 
     public function setUtmReferer(array $refererValues)
     {
         if(isset($refererValues['UtmReferableInterface']))
         {
-            $this->utmSource    = isset($refererValues['UtmReferableInterface']['utm_source']) ? $refererValues['UtmReferableInterface']['utm_source'] : null;
-            $this->utmMedium    = isset($refererValues['UtmReferableInterface']['utm_medium']) ? $refererValues['UtmReferableInterface']['utm_medium'] : null;
-            $this->utmCampaign  = isset($refererValues['UtmReferableInterface']['utm_campaign']) ? $refererValues['UtmReferableInterface']['utm_campaign'] : null;
-            $this->utmTerm      = isset($refererValues['UtmReferableInterface']['utm_term']) ? $refererValues['UtmReferableInterface']['utm_term'] : null;
-            $this->utmContent   = isset($refererValues['UtmReferableInterface']['utm_content']) ? $refererValues['UtmReferableInterface']['utm_content'] : null;
+            $this->utmSource    = $refererValues['UtmReferableInterface']['utm_source'] ?? null;
+            $this->utmMedium    = $refererValues['UtmReferableInterface']['utm_medium'] ?? null;
+            $this->utmCampaign  = $refererValues['UtmReferableInterface']['utm_campaign'] ?? null;
+            $this->utmTerm      = $refererValues['UtmReferableInterface']['utm_term'] ?? null;
+            $this->utmContent   = $refererValues['UtmReferableInterface']['utm_content'] ?? null;
         }
     }
 

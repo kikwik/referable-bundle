@@ -12,12 +12,12 @@ trait HttpReferableTrait
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $httpReferer;
+    protected $httpReferer;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $httpRefererLandingUrl;
+    protected $httpRefererLandingUrl;
 
     public function getHttpReferer(): ?string
     {

@@ -9,17 +9,17 @@ trait CpcReferableTrait
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $refererChannel;
+    protected $refererChannel;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $refererPartner;
+    protected $refererPartner;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $refererCreativity;
+    protected $refererCreativity;
 
 
     public function setCpcReferer(array $refererValues)
